@@ -3,9 +3,9 @@
 using Microsoft.Quantum.Simulation.Core;
 using Microsoft.Quantum.Simulation.Simulators;
 
-using Quantum.Bell;
+using Quantum.Tangles;
 
-namespace Quantum.Bell
+namespace Quantum.Tangles
 {
     class Driver
     {
@@ -16,9 +16,9 @@ namespace Quantum.Bell
                Result[] initials = new Result[] { Result.Zero, Result.One};
                foreach (Result initial in initials)
                {
-                   var res = BellTest.Run(qsim, 1000, initial).Result;
-                   var (numZeros, numOnes, agree) = res;
-                   System.Console.WriteLine($"Init: {initial, -4} 0s = {numZeros, -4}, 1s = {numOnes, -4} agree={agree,-1}");
+                   var res = TanglesTest.Run(qsim, 1000, initial).Result;
+                   var (deadCount, aliveCount, agree) = res;
+                   System.Console.WriteLine($"Init: {initial, -4} Deaths = {deadCount, -4}, Lives = {aliveCount, -4} agree={agree,-1}");
                }
             }
         }

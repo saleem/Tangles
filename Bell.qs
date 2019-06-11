@@ -1,4 +1,4 @@
-﻿namespace Quantum.Bell
+﻿namespace Quantum.Tangles
 {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Intrinsic;
@@ -9,8 +9,8 @@
         }
     }
 
-    operation BellTest (count : Int, initial: Result) : (Int, Int, Int) {
-        mutable numOnes = 0;
+    operation TanglesTest (count : Int, initial: Result) : (Int, Int, Int) {
+        mutable aliveCount = 0;
         mutable agree = 0;
         using ((q0, q1) = (Qubit(), Qubit())) {
             for (test in 1..count) {
@@ -25,12 +25,12 @@
                 }
 
                 if (res == One) {
-                    set numOnes += 1;
+                    set aliveCount += 1;
                 }
             }
             Set(Zero, q0);
             Set(Zero, q1);
         }
-        return (count-numOnes, numOnes, agree);
+        return (count-aliveCount, aliveCount, agree);
     }
 }
