@@ -12,15 +12,16 @@
     operation TanglesTest (count : Int, initial: Result) : (Int, Int, Int) {
         mutable aliveCount = 0;
         mutable agree = 0;
-        using ((q0, q1) = (Qubit(), Qubit())) {
+        using ((qAtomicState, qFelineLife) = (Qubit(), Qubit())) {
             for (test in 1..count) {
-                Set (initial, q0);
-                Set (Zero, q1);
-                H(q0);
-                CNOT(q0, q1);
-                let res = M (q0);
+                Set (initial, qAtomicState);
+                Set (Zero, qFelineLife);
+                H(qAtomicState);
+                // Tangle the cat's life with the atomic state:
+                CNOT(qAtomicState, qFelineLife);
+                let res = M (qAtomicState);
 
-                if (M(q1) == res) {
+                if (M(qFelineLife) == res) {
                     set agree += 1;
                 }
 
@@ -28,8 +29,8 @@
                     set aliveCount += 1;
                 }
             }
-            Set(Zero, q0);
-            Set(Zero, q1);
+            Set(Zero, qAtomicState);
+            Set(Zero, qFelineLife);
         }
         return (count-aliveCount, aliveCount, agree);
     }
